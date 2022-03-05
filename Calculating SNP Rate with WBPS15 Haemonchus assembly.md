@@ -147,57 +147,60 @@ more SUM.gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.gff
 ```	
 
 	
+Note, for some reason genes are not in same order as in the .gff3 file, but checked and seem to be ok with the answers!
 
-	#Note, for some reason genes are not in same order as in the .gff3 file, but checked and seem to be ok with the answers!
-	grep 'HCON_00000020-00001' SUM.gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.gff3 > check
-	more check
-	HCON_00000020-00001 485 4
+```
+grep 'HCON_00000020-00001' SUM.gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.gff3 > check
+more check
+HCON_00000020-00001 485 4
+```	
+
 	
 
+Need to get the CDS file so that can make into a .bed file, in order to merge with the mpileup file to determine SNPs. 
+Need to get the first column to be just the chromosome to make into a .bed file
 	
+```
+sed 's/hcontortus_chr//g' gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.gff3 > Hcon_chr_1 
 
-	Need to get the CDS file so that can make into a .bed file, in order to merge with the mpileup file to determine SNPs. 
-	Need to get the first column to be just the chromosome to make into a .bed file
-	
 
-	sed 's/hcontortus_chr//g' gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.gff3 > Hcon_chr_1 
-	
+sed 's/_Celeg_TT_arrow_pilon//g' Hcon_chr_1 > Hcon_chr_2
+```	
 
-	sed 's/_Celeg_TT_arrow_pilon//g' Hcon_chr_1 > Hcon_chr_2
-	
+Get:
 
-	Get:
-	more Hcon_chr_2
+```
+more Hcon_chr_2
 	1       CDS     18085   18190   HCON_00000020-00001     105
 	1       CDS     23328   23452   HCON_00000020-00001     124
 	1       CDS     24224   24319   HCON_00000020-00001     95
 	1       CDS     28633   28794   HCON_00000020-00001     161
 	1       CDS     31561   31707   HCON_00000030-00001     146
 	1       CDS     32036   32192   HCON_00000030-00001     156
-	
+```	
 
 	
-
-	To get to right format do:
+To get to right format do:
 	
+```
+awk '{print $1 "\t" $3 "\t" $4 "\t" $2 "\t" $5 "\t" $6}' Hcon_chr_2  > gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.bed
+```	
 
-	awk '{print $1 "\t" $3 "\t" $4 "\t" $2 "\t" $5 "\t" $6}' Hcon_chr_2  > gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.bed
-	
-
-	Get: 
-	more gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.bed
+Get: 
+```
+more gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.bed
 	1       18085   18190   CDS     HCON_00000020-00001     105
 	1       23328   23452   CDS     HCON_00000020-00001     124
 	1       24224   24319   CDS     HCON_00000020-00001     95
 	1       28633   28794   CDS     HCON_00000020-00001     161
 	1       31561   31707   CDS     HCON_00000030-00001     146
 	1       32036   32192   CDS     HCON_00000030-00001     156
-	
+```	
 
 	
 
-	#######################Files generated: ################
-	Input file (from Steve):
+#######################Files generated: ################
+Input file (from Steve):
 	HCON_V4_curated_20200422_WBPS15.gff3
 	Sum of CDS length per gene:
 	-rw-rw-r-- 1 jmi45g jmi45g   569600 Jun  4 14:14 SUM.gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.gff3
