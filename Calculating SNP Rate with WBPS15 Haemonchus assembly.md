@@ -208,10 +208,10 @@ Input file (from Steve):
 HCON_V4_curated_20200422_WBPS15.gff3
 
 #Sum of CDS length per gene:
--rw-rw-r-- 1 jmi45g jmi45g   569600 Jun  4 14:14 SUM.gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.gff3
+-rw-rw-r-- 1 jm jm   569600 Jun  4 14:14 SUM.gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.gff3
 
 #Each CDS with length as a bed file for merging with the mpileup file to obtain SNPS:
--rw-rw-r-- 1 jmi45g jmi45g  8884725 Jun  4 14:23 gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.bed
+-rw-rw-r-- 1 jm jm  8884725 Jun  4 14:23 gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.bed
 ```	
 
 	
@@ -237,7 +237,7 @@ To make into a .bed file to extract the CDS:
 	#PBS -l walltime=50:00:00
 	#PBS -l cput=50:00:00
 	#PBS -l nodes=1:centos6
-	awk '{print $1 "\t" $2 "\t" ($2+1) "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $8 "\t" $9}' /export/home/jmi45g/Hcont_Snp_diversity/MAPQ20.UGA_ISE.mpileup2 > /export/home/jmi45g/Hcont_Snp_diversity/bp2_MAPQ20.UGA_ISE.mpileup2
+	awk '{print $1 "\t" $2 "\t" ($2+1) "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $8 "\t" $9}' /export/home/jm/Hcont_Snp_diversity/MAPQ20.UGA_ISE.mpileup2 > /export/home/jm/Hcont_Snp_diversity/bp2_MAPQ20.UGA_ISE.mpileup2
 ```	
 
 On the HPCC - paste into nano. 
@@ -265,14 +265,14 @@ To make into a bed file:
 	#PBS -l walltime=50:00:00
 	#PBS -l cput=50:00:00
 	#PBS -l nodes=1:centos6
-	sed 's/hcontortus_chr//g' /export/home/jmi45g/Hcont_Snp_diversity/bp2_MAPQ20.UGA_ISE.mpileup2 > /export/home/jmi45g/Hcont_Snp_diversity/Hcon_chr_1 
+	sed 's/hcontortus_chr//g' /export/home/jm/Hcont_Snp_diversity/bp2_MAPQ20.UGA_ISE.mpileup2 > /export/home/jm/Hcont_Snp_diversity/Hcon_chr_1 
 	
 
 	#!/bin/sh
 	#PBS -l walltime=50:00:00
 	#PBS -l cput=50:00:00
 	#PBS -l nodes=1:centos6
-	sed 's/_Celeg_TT_arrow_pilon//g' /export/home/jmi45g/Hcont_Snp_diversity/Hcon_chr_1 > /export/home/jmi45g/Hcont_Snp_diversity/bp2_MAPQ20.UGA_ISE.mpileup2.bed
+	sed 's/_Celeg_TT_arrow_pilon//g' /export/home/jm/Hcont_Snp_diversity/Hcon_chr_1 > /export/home/jm/Hcont_Snp_diversity/bp2_MAPQ20.UGA_ISE.mpileup2.bed
 ```	
 
 Note, it still has the mtDNA written out a bit more. Not sure if this will be a problem. 
@@ -283,7 +283,7 @@ Don't remember doing anything about it last time!
 	#PBS -l walltime=50:00:00
 	#PBS -l cput=50:00:00
 	#PBS -l nodes=1:centos6
-	bedtools intersect -a /export/home/jmi45g/Hcont_Snp_diversity/bp2_MAPQ20.UGA_ISE.mpileup2.bed -b /export/home/jmi45g/Hcont_Snp_diversity/gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.bed -wa -wb -f 2E-9 > /export/home/jmi45g/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup2.bed
+	bedtools intersect -a /export/home/jm/Hcont_Snp_diversity/bp2_MAPQ20.UGA_ISE.mpileup2.bed -b /export/home/jm/Hcont_Snp_diversity/gene.length.CDS.T1.haemonchus_contortus.PRJEB506.WBPS15.annotations.bed -wa -wb -f 2E-9 > /export/home/jm/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup2.bed
 ```	
 
 All fine - it merged no problem, but note that there is no mt_DNA in it. 
@@ -299,7 +299,7 @@ Note, am removing the gene file info and ALSO the second bp column!!
 	#PBS -l walltime=30:00:00
 	#PBS -l cput=50:00:00
 	#PBS -l nodes=1:centos6
-	awk '{print $1 "\t" $2 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $8 "\t" $9 "\t" $10}' /export/home/jmi45g/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup2.bed > /export/home/jmi45g/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup
+	awk '{print $1 "\t" $2 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $8 "\t" $9 "\t" $10}' /export/home/jm/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup2.bed > /export/home/jm/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup
 ```	
 
 For the following steps use PoPoolation2 (Kofler et al., 2011b). 
@@ -311,11 +311,11 @@ To identify indels of 2 basepairs or greater:
 	#PBS -l walltime=30:00:00
 	#PBS -l cput=50:00:00
 	#PBS -l nodes=1:centos6
-	perl  /export/home/jmi45g/popoolation2_1201/indel_filtering/identify-indel-regions.pl \
+	perl  /export/home/jm/popoolation2_1201/indel_filtering/identify-indel-regions.pl \
 	--indel-window 5 \
 	--min-count 2 \
-	--input /export/home/jmi45g/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup \
-	--output /export/home/jmi45g/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup.indels.gtf
+	--input /export/home/jm/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup \
+	--output /export/home/jm/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup.indels.gtf
 ```	
 
 To sync the filtered mpileup file (discarding low quality bases):
@@ -325,9 +325,9 @@ To sync the filtered mpileup file (discarding low quality bases):
 	#PBS -l walltime=30:00:00
 	#PBS -l cput=50:00:00
 	#PBS -l nodes=1:centos6
-	java -ea -Xmx7g -jar /export/home/jmi45g/popoolation2_1201/mpileup2sync.jar \
-	--input /export/home/jmi45g/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup \
-	--output /export/home/jmi45g/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.java.sync \
+	java -ea -Xmx7g -jar /export/home/jm/popoolation2_1201/mpileup2sync.jar \
+	--input /export/home/jm/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup \
+	--output /export/home/jm/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.java.sync \
 	--fastq-type sanger \
 	--min-qual 20 \
 	--threads 8
@@ -340,10 +340,10 @@ To then filter the basepairs around the indels (as these can have false SNPs due
 	#PBS -l walltime=30:00:00
 	#PBS -l cput=50:00:00
 	#PBS -l nodes=1:centos6
-	perl /export/home/jmi45g/popoolation2_1201/indel_filtering/filter-sync-by-gtf.pl \
-	--input /export/home/jmi45g/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.java.sync \
-	--gtf /export/home/jmi45g/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup.indels.gtf \
-	--output /export/home/jmi45g/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync
+	perl /export/home/jm/popoolation2_1201/indel_filtering/filter-sync-by-gtf.pl \
+	--input /export/home/jm/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.java.sync \
+	--gtf /export/home/jm/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.mpileup.indels.gtf \
+	--output /export/home/jm/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync
 ```	
 
 To then make separate UGA and ISE files:
@@ -353,23 +353,23 @@ To then make separate UGA and ISE files:
 	#PBS -l walltime=30:00:00
 	#PBS -l cput=50:00:00
 	#PBS -l nodes=1:centos6
-	awk '{print $1 "\t" $2 "\t" $3 "\t" $4}' /export/home/jmi45g/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync > /export/home/jmi45g/Hcont_Snp_diversity/UGA_CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync
+	awk '{print $1 "\t" $2 "\t" $3 "\t" $4}' /export/home/jm/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync > /export/home/jm/Hcont_Snp_diversity/UGA_CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync
 	
 
 	#!/bin/sh
 	#PBS -l walltime=30:00:00
 	#PBS -l cput=50:00:00
 	#PBS -l nodes=1:centos6
-	awk '{print $1 "\t" $2 "\t" $3 "\t" $5}' /export/home/jmi45g/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync > /export/home/jmi45g/Hcont_Snp_diversity/ISE_CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync
+	awk '{print $1 "\t" $2 "\t" $3 "\t" $5}' /export/home/jm/Hcont_Snp_diversity/CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync > /export/home/jm/Hcont_Snp_diversity/ISE_CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync
 	
 
 	#!/bin/sh
 	#PBS -l walltime=30:00:00
 	#PBS -l cput=50:00:00
 	#PBS -l nodes=1:centos6
-	perl /export/home/jmi45g/popoolation2_1201/snp-frequency-diff.pl \
-	--input /export/home/jmi45g/Hcont_Snp_diversity/UGA_CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync \
-	--output-prefix /export/home/jmi45g/Hcont_Snp_diversity/UGA_CDS_WBPS15_MAPQ20. \
+	perl /export/home/jm/popoolation2_1201/snp-frequency-diff.pl \
+	--input /export/home/jm/Hcont_Snp_diversity/UGA_CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync \
+	--output-prefix /export/home/jm/Hcont_Snp_diversity/UGA_CDS_WBPS15_MAPQ20. \
 	--min-count 2 \
 	--min-coverage 10 \
 	--max-coverage 2%
@@ -384,9 +384,9 @@ To then make separate UGA and ISE files:
 	#PBS -l walltime=30:00:00
 	#PBS -l cput=50:00:00
 	#PBS -l nodes=1:centos6
-	perl /export/home/jmi45g/popoolation2_1201/snp-frequency-diff.pl \
-	--input /export/home/jmi45g/Hcont_Snp_diversity/ISE_CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync \
-	--output-prefix /export/home/jmi45g/Hcont_Snp_diversity/ISE_CDS_WBPS15_MAPQ20. \
+	perl /export/home/jm/popoolation2_1201/snp-frequency-diff.pl \
+	--input /export/home/jm/Hcont_Snp_diversity/ISE_CDS_WBPS15_bp2_MAPQ20.UGA_ISE.noindels.java.sync \
+	--output-prefix /export/home/jm/Hcont_Snp_diversity/ISE_CDS_WBPS15_MAPQ20. \
 	--min-count 2 \
 	--min-coverage 10 \
 	--max-coverage 2%
